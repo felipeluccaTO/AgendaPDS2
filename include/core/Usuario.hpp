@@ -82,8 +82,7 @@ public:
   /// @return True se o nome e o email correpondem, false caso contrario
   static bool checkUsuario(std::string* email, std::string* nome);
 
-private:
-  static std::unordered_map<std::string, Usuario> _listadeusuario; ///< Armazena a lista de usuarios <email, Usuario>
+
 };
 
 #endif
