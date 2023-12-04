@@ -1,9 +1,11 @@
-#include "D:\Usuario\Documents\AgendaPDS2\include\core\Usuario.hpp"
-#include "D:\Usuario\Documents\AgendaPDS2\include\core\Excecoes.hpp"
+#include "Usuario.hpp"
+#include "Excecoes.hpp"
 
 #include <iostream>
 #include <string>
 #include <sstream>
+
+static std::unordered_map<std::string, Usuario> _listadeusuario;
  
 Usuario::Usuario(std::string& nome, std::string& sobrenome, std::string& idade, std::string& email) {
     setNome(nome, sobrenome);
