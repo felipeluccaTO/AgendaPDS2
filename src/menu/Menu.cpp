@@ -1,7 +1,7 @@
-#include "Menu.hpp"
-#include "Calendario.hpp"
-#include "Lembrete.hpp"
-#include "Tarefa.hpp"
+#include "../include/menu/Menu.hpp"
+#include "../include/core/Calendario.hpp"
+#include "../include/core/Lembrete.hpp"
+#include "../include/core/Tarefa.hpp"
 
 
 
