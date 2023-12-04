@@ -1,55 +1,50 @@
-# <<<<<<< HEAD
+CXX = g++
+CXXFLAGS = -std=c++11 -Wall
+SRC_DIR = src
+INC_DIR = include
+TEST_DIR = test
+BUILD_DIR = build
+EXECUTABLE = programa
+TEST_EXECUTABLE = test_programa
 
-# CXX = g++
-# CXXFLAGS = -std=c++17 -Wall -Wextra
+# Lista de todos os arquivos .cpp em src/core e src/menu
+SRCS = $(wildcard $(SRC_DIR)/core/*.cpp) $(wildcard $(SRC_DIR)/menu/*.cpp)
 
-# # Diretórios dos arquivos fonte e objetos
-# SRC_DIR = src
-# OBJ_DIR = obj
-# TEST_DIR = test
-# INCLUDE_DIR = include
+# Gera uma lista de nomes de arquivos .o correspondentes
+OBJS = $(patsubst $(SRC_DIR)/%.cpp, $(BUILD_DIR)/%.o, $(SRCS))
 
-# # Arquivos fonte
-# SRCS = $(wildcard $(SRC_DIR)/**/*.cpp) main.cpp
-# OBJS = $(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(SRCS))
+# Lista de todos os arquivos .cpp em test/core e test/storage
+TEST_SRCS = $(wildcard $(TEST_DIR)/core/*.cpp) $(wildcard $(TEST_DIR)/storage/*.cpp)
 
-# # Alvos
-# TARGET = AgendaPDS2
-# TEST_TARGET = test
+# Gera uma lista de nomes de arquivos .o correspondentes para os testes
+TEST_OBJS = $(patsubst $(TEST_DIR)/%.cpp, $(BUILD_DIR)/%.o, $(TEST_SRCS))
 
-# # Compilar tudo
-# .PHONY: all
-# all: build test run
+all: $(EXECUTABLE)
 
-# # Compilar aplicação principal
-# .PHONY: build
-# build: $(TARGET)
+$(EXECUTABLE): $(OBJS) $(SRC_DIR)/main.cpp
+	$(CXX) $(CXXFLAGS) $^ -o $@
 
-# $(TARGET): $(OBJS)
-# 	$(CXX) $(CXXFLAGS) -o $@ $^
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp $(INC_DIR)/%.hpp | $(BUILD_DIR)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-# # Compilar testes
-# .PHONY: test
-# test: $(TEST_TARGET)
-# 	./$(TEST_TARGET)
+test: $(TEST_EXECUTABLE)
+	./$(TEST_EXECUTABLE)
 
-# $(TEST_TARGET): $(filter-out $(OBJ_DIR)/main.o, $(OBJS))
-# 	$(CXX) $(CXXFLAGS) -o $@ $^
+$(TEST_EXECUTABLE): $(OBJS) $(TEST_OBJS)
+	$(CXX) $(CXXFLAGS) $^ -o $@
 
-# # Executar a aplicação
-# .PHONY: run
-# run: build
-# 	./$(TARGET)
+$(BUILD_DIR)/%.o: $(TEST_DIR)/%.cpp $(INC_DIR)/%.hpp | $(BUILD_DIR)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-# # Compilar objetos
-# $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
-# 	$(CXX) $(CXXFLAGS) -c -o $@ $< -I$(INCLUDE_DIR)
+$(BUILD_DIR):
+	mkdir -p $@
 
-# # Limpar arquivos temporários
-# .PHONY: clean
-# clean:
-# 	rm -f $(OBJ_DIR)/*.o $(TARGET) $(TEST_TARGET)
-# >>>>>>> 060eb6945b643ed0cf601fb903867b6bc924c781
+clean:
+	rm -rf $(BUILD_DIR) $(EXECUTABLE) $(TEST_EXECUTABLE)
 
-alvo:
-	g++ include/core/Calendario.hpp include/core/Excecoes.hpp include/core/Lembrete.hpp include/core/Notificacao.hpp include/core/Tarefa.hpp include/core/Usuario.hpp include/menu/Compromisso.hpp include/menu/Lembrete.hpp include/menu/Login.hpp include/menu/Menu.hpp include/menu/Tarefa.hpp include/menu/Usuario.hpp main.cpp -o a.exe
+run: $(EXECUTABLE)
+	./$(EXECUTABLE)
+
+test_run: $(TEST_EXECUTABLE)
+	./$(TEST_EXECUTABLE)
+
