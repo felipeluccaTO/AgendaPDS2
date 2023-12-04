@@ -22,7 +22,7 @@ make test: Compila e executa testes (substitua pela lógica específica do seu p
 make clean: Remove os diretórios build e bin, limpando os arquivos gerados.
 
 > - Via MINGW:
->   Caso o arquivo Makefile falhe, disponibilizamos o programa executável progama.exe na pasta progama. Para executá-lo, certifique-se de ter um compilador C++ instalado e digite './progama.exe' no prompt de comando
+>   Caso o arquivo Makefile falhe,você pode compilar manualmente usando código 'g++ -Iinclude/core -Iinclude/menu src/core/Calendario.cpp src/core/Excecoes.cpp src/core/Lembrete.cpp src/core/Notificacao.cpp src/core/Tarefa.cpp src/core/Usuario.cpp src/menu/Menu.cpp main.cpp -o progama.exe' e './progama.exe' no terminal de comando
 
 # Autores (Grupo 5)
 `Felipe Lucca Taumaturgo de Oliveira`
